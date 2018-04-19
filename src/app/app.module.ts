@@ -7,9 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MaterialUiModule } from './material-ui/material-ui.module';
 import { HttpClientModule } from '@angular/common/http';
+import { AutoupdateComponent } from './autoupdate/autoupdate.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, AutoupdateComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

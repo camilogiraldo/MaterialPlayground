@@ -13,14 +13,22 @@ export class AppService {
   readonly ACCESS_TOKEN = environment.ACCESS_TOKEN;
   readonly API_URL = 'https://sandbox.tradier.com/v1/markets/lookup?q=';
 
-  search(terms: Observable<string>){
+  search(terms: Observable<string>) {
     console.log(terms);
-    return terms.debounceTime(400)
+    return terms
+      .debounceTime(400)
       .distinctUntilChanged()
-      .switchMap(term => this.getNames(term))
+      .switchMap(term => this.getNames(term));
   }
 
-  getNames(nameFilter) {
+  getNames(nameFilter: string) {
+    return this.http.get(this.API_URL + nameFilter, {
+      headers: this.authorization
+    });
+  }
+
+  getComments() {
+    const nameFilter = 'aa'
     return this.http.get(this.API_URL + nameFilter, {
       headers: this.authorization
     });

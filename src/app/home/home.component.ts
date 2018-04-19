@@ -1,9 +1,11 @@
-import { AppService } from './../shared/app.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { startWith, map } from 'rxjs/operators';
 import { Subject } from 'rxjs/Subject';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/observable/timer';
+import { map, startWith } from 'rxjs/operators';
+import { AppService } from './../shared/app.service';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +16,20 @@ export class HomeComponent implements OnInit {
   inputAutoField: FormControl = new FormControl();
   formGroup: FormGroup;
   options = [];
+  response;
+  count = 0;
   filteredOptions: Observable<string[]>;
   searchTerm$ = new Subject<string>();
+  checked = false;
 
   constructor(private appService: AppService) {
+    this.createSearchSubscription();
+  }
+
+  createSearchSubscription() {
     this.appService.search(this.searchTerm$).subscribe(
       data => {
-        this.options = data.securities.security;
+        this.options = data['securities']['security'];
         console.log(this.options);
         this.filteredOptions = this.inputAutoField.valueChanges.pipe(
           startWith(''),
@@ -37,11 +46,6 @@ export class HomeComponent implements OnInit {
     this.formGroup = new FormGroup({
       input: this.inputAutoField
     });
-  }
-
-  onChange(event) {
-    // const filter = event.target.value;
-    // this.searchTerm$.next(filter);
   }
 
   filter(val: string): string[] {
