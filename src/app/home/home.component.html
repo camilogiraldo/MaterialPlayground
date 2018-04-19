@@ -1,0 +1,15 @@
+
+<div class="container">
+  <div class="container-fluid">
+    <form class="example-form"  [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+      <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="inputAutoField" [matAutocomplete]="auto" (keyup)="searchTerm$.next($event.target.value)">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async | slice:0:9" [value]="option.symbol">
+            {{ option.symbol }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
+</div>
