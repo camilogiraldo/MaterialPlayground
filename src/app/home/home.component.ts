@@ -16,11 +16,8 @@ export class HomeComponent implements OnInit {
   inputAutoField: FormControl = new FormControl();
   formGroup: FormGroup;
   options = [];
-  response;
-  count = 0;
   filteredOptions: Observable<string[]>;
   searchTerm$ = new Subject<string>();
-  checked = false;
 
   constructor(private appService: AppService) {
     this.createSearchSubscription();
